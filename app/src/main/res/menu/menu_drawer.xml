@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/item_pokemons"
+            android:checked="false"
+            android:icon="@drawable/ic_pokemon"
+            android:title="@string/item_one" />
+
+        <item
+            android:id="@+id/item_moves"
+            android:checked="false"
+            android:icon="@drawable/ic_moves"
+            android:title="@string/item_two" />
+
+        <item
+            android:id="@+id/item_abilities"
+            android:checked="false"
+            android:icon="@drawable/ic_abilities"
+            android:title="@string/item_three" />
+
+        <item
+            android:id="@+id/item_types"
+            android:checked="false"
+            android:icon="@drawable/ic_types"
+            android:title="@string/item_four" />
+
+    </group>
+
+</menu>

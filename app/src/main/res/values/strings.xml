@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KotlinPokedex</string>
+    <string name="item_one">Pokémones</string>
+    <string name="item_two">Moves</string>
+    <string name="item_three">Abilities</string>
+    <string name="item_four">Types</string>
 </resources>
