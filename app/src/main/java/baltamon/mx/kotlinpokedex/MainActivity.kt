@@ -1,5 +1,6 @@
 package baltamon.mx.kotlinpokedex
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -7,6 +8,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
+import baltamon.mx.kotlinpokedex.activities.PokemonDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
@@ -34,7 +36,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_pokemons -> showToast("Pokemones")
+            R.id.item_pokemons -> {
+                startActivity(Intent(this, PokemonDetailActivity::class.java))
+                closeDrawer()
+            }
             R.id.item_moves -> showToast("Moves")
             R.id.item_abilities -> showToast("Abilities")
             R.id.item_types -> showToast("Types")

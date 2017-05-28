@@ -4,4 +4,7 @@
     <string name="item_two">Moves</string>
     <string name="item_three">Abilities</string>
     <string name="item_four">Types</string>
+    <string name="title_about">About</string>
+    <string name="title_moves">Moves</string>
+    <string name="title_abilities">Abilities</string>
 </resources>
