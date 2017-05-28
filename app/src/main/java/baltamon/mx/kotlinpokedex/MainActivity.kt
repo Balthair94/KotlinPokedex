@@ -4,11 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,13 +45,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun setUpNavigationView() {
-        val navigationView: NavigationView? = findViewById(R.id.navigation_view) as NavigationView
-        navigationView?.setNavigationItemSelectedListener(this)
+        navigation_view.setNavigationItemSelectedListener(this)
     }
 
 
     fun setToolbar() {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
         toolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
 
@@ -62,18 +60,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun openDrawer() {
-        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawerLayout.openDrawer(GravityCompat.START)
+        drawer_layout.openDrawer(GravityCompat.START)
     }
 
     fun closeDrawer() {
-        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawerLayout.closeDrawers()
+        drawer_layout.closeDrawers()
     }
 
     fun isDrawerOpen(): Boolean {
-        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        return drawerLayout.isDrawerOpen(GravityCompat.START)
+        return drawer_layout.isDrawerOpen(GravityCompat.START)
     }
 
     fun showToast(text: String) {
