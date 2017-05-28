@@ -7,4 +7,9 @@
     <string name="title_about">About</string>
     <string name="title_moves">Moves</string>
     <string name="title_abilities">Abilities</string>
+    <string name="pokemon_name">Pokemon Name</string>
+    <string name="pokemon_types">Type One, Type Two</string>
+    <string name="weight">Weight</string>
+    <string name="hight">Hight</string>
+    <string name="forms">Forms</string>
 </resources>
