@@ -1,15 +1,14 @@
 package baltamon.mx.kotlinpokedex
 
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBar
-import android.support.v7.widget.Toolbar
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -20,70 +19,59 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setUpNavigationView()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == android.R.id.home)
-            openDrawer()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> openDrawer()
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
-        if (isDrawerOpen())
-            closeDrawer()
-        else
-            super.onBackPressed()
+        if (isDrawerOpen()) closeDrawer()
+        else super.onBackPressed()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val option: Int = item.itemId
-        when(option){
-            R.id.item_pokemons -> {showToast("Pokemones")}
-            R.id.item_moves -> {showToast("Moves")}
-            R.id.item_abilities -> {showToast("Abilities")}
-            R.id.item_types -> {showToast("Types")}
+        when (item.itemId) {
+            R.id.item_pokemons -> showToast("Pokemones")
+            R.id.item_moves -> showToast("Moves")
+            R.id.item_abilities -> showToast("Abilities")
+            R.id.item_types -> showToast("Types")
             else -> showToast("No option selected")
         }
 
         return true
     }
 
-    fun setUpNavigationView(){
-        val navigationView : NavigationView? = findViewById(R.id.navigation_view) as NavigationView
-        navigationView!!.setNavigationItemSelectedListener(this)
+    fun setUpNavigationView() {
+        navigation_view.setNavigationItemSelectedListener(this)
     }
 
 
     fun setToolbar() {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
         toolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
 
-        val actionBar : ActionBar? = supportActionBar
-        if (actionBar != null) {
-            actionBar.title = "Pokedex"
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
-            actionBar.setDisplayShowTitleEnabled(true)
-        }
+        supportActionBar?.title = "Pokedex"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
     }
 
-    fun openDrawer(){
-        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawerLayout.openDrawer(GravityCompat.START)
+    fun openDrawer() {
+        drawer_layout.openDrawer(GravityCompat.START)
     }
 
-    fun closeDrawer(){
-        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawerLayout.closeDrawers()
+    fun closeDrawer() {
+        drawer_layout.closeDrawers()
     }
 
-    fun isDrawerOpen() : Boolean{
-        val drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            return true
-        return false
+    fun isDrawerOpen(): Boolean {
+        return drawer_layout.isDrawerOpen(GravityCompat.START)
     }
 
-    fun showToast(text: String){
+    fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 }
