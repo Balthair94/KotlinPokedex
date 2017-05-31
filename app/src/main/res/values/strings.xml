@@ -12,4 +12,10 @@
     <string name="weight">Weight</string>
     <string name="hight">Hight</string>
     <string name="forms">Forms</string>
+    <string name="move_name">Move Name</string>
+    <string name="pp">PP: 00</string>
+    <string name="power">Power: 00</string>
+    <string name="damage">Damage: 00</string>
+    <string name="move_cl">Class: 00</string>
+    <string name="dummy_description">Dummy description</string>
 </resources>
