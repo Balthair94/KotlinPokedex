@@ -1,7 +1,9 @@
 package baltamon.mx.kotlinpokedex.models
 
 /**
- * Created by Baltazar Rodriguez on 07/06/2017.
+ * Created by Baltazar Rodriguez on 10/06/2017.
  */
-class Pokemon(val id: Int, val name: String, val weight: Int, val height: Int, val sprites: ) {
+class Pokemon (id: Int, name: String, height: Int, weight: Int, sprites: PokemonSprites,
+               moves: ArrayList<PokemonMove>, abilities: ArrayList<PokemonAbility>,
+               types: ArrayList<PokemonType>){
 }
