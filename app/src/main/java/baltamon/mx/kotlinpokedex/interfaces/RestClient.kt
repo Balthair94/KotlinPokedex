@@ -1,6 +1,7 @@
 package baltamon.mx.kotlinpokedex.interfaces
 
 import baltamon.mx.kotlinpokedex.models.APIResourceList
+import baltamon.mx.kotlinpokedex.models.NamedAPIResourceList
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -9,5 +10,5 @@ import retrofit2.http.GET
  */
 interface RestClient {
     @get:GET("pokemon")
-    val data: Call<APIResourceList>
+    val data: Call<NamedAPIResourceList>
 }
