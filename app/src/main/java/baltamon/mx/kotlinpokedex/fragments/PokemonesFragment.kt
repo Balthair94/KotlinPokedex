@@ -61,7 +61,7 @@ class PokemonesFragment : Fragment() {
                         var adapter = RVAdapterPokemones(pokemonList!!.results)
                         recyclerView.adapter = adapter
                     }
-                    else -> Log.i("ERROR", "NO DATA")
+                    else -> Log.i("ERROR", "DATA ERROR")
                 }
             }
 
