@@ -61,7 +61,7 @@ class PokemonesFragment : Fragment() {
                 when (response.code()){
                     200 -> {
                         val pokemonList: NamedAPIResourceList? = response.body()
-                        val adapter = RVAdapterPokemones(pokemonList!!.results)
+                        val adapter = RVAdapterPokemones(pokemonList!!.results, context)
                         recyclerView.adapter = adapter
                     }
                     else -> Log.i("ERROR", "DATA ERROR")

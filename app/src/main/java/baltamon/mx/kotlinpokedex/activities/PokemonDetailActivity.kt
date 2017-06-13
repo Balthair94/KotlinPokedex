@@ -1,9 +1,12 @@
 package baltamon.mx.kotlinpokedex.activities
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.TabPokemonFragmentAdapter
 import kotlinx.android.synthetic.main.activity_pokemon_detail.*
@@ -12,6 +15,9 @@ import kotlinx.android.synthetic.main.layout_toolbar.*
 /**
  * Created by Baltazar Rodriguez on 28/05/2017.
  */
+
+private const val INTENT_POKEMON_URL = "pokemon_url"
+
 class PokemonDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +26,9 @@ class PokemonDetailActivity : AppCompatActivity() {
 
         setUpToolbar()
         setUpTabView()
+
+        val pokemonUrl = intent.getStringExtra(INTENT_POKEMON_URL)
+        Toast.makeText(this, pokemonUrl, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
