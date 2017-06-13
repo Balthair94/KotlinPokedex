@@ -2,10 +2,8 @@ package baltamon.mx.kotlinpokedex.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +16,7 @@ import baltamon.mx.kotlinpokedex.models.NamedAPIResource
  * Created by Baltazar Rodriguez on 11/06/2017.
  */
 
-private const val INTENT_POKEMON_URL = "pokemon_url"
+private const val INTENT_POKEMON_NAME = "pokemon_name"
 
 class RVAdapterPokemones internal constructor(pokemones: List<NamedAPIResource>, context: Context) :
         RecyclerView.Adapter<RVAdapterPokemones.PokemonViewHolder>() {
@@ -45,7 +43,7 @@ class RVAdapterPokemones internal constructor(pokemones: List<NamedAPIResource>,
         holder.textView.text = pokemones[position].name
         holder.cv.setOnClickListener {
             val intent = Intent(context, PokemonDetailActivity::class.java)
-            intent.putExtra(INTENT_POKEMON_URL, pokemones[position].url)
+            intent.putExtra(INTENT_POKEMON_NAME, pokemones[position].name)
             context.startActivity(intent)
         }
     }
