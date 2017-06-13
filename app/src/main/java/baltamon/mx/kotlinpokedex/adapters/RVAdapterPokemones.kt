@@ -1,8 +1,8 @@
 package baltamon.mx.kotlinpokedex.adapters
 
-import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +35,7 @@ class RVAdapterPokemones internal constructor(pokemones: List<NamedAPIResource>)
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         holder.textView.text = pokemones[position].name
+        holder.cv.setOnClickListener { Log.i("Event", "Button pressed") }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {

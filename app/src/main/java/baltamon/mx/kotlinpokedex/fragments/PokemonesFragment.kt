@@ -1,5 +1,6 @@
 package baltamon.mx.kotlinpokedex.fragments
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -36,43 +37,45 @@ class PokemonesFragment : Fragment() {
     }
 
     fun loadView(view: View) {
-        var recyclerView: RecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
+        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         loadJson(recyclerView)
     }
 
     fun loadJson(recyclerView: RecyclerView){
+        val dialog = ProgressDialog.show(context, "Loading", "Loading, please wait...", true)
+
         val gson = GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create()
-        var retrofit = Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/")
+        val retrofit = Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
-        var restClient = retrofit.create(RestClient::class.java)
-        var call = restClient.data
+        val restClient = retrofit.create(RestClient::class.java)
+        val call = restClient.pokemones
 
         call.enqueue(object: Callback<NamedAPIResourceList>{
             override fun onResponse(call: Call<NamedAPIResourceList>, response: Response<NamedAPIResourceList>) {
                 when (response.code()){
                     200 -> {
                         val pokemonList: NamedAPIResourceList? = response.body()
-                        var adapter = RVAdapterPokemones(pokemonList!!.results)
+                        val adapter = RVAdapterPokemones(pokemonList!!.results)
                         recyclerView.adapter = adapter
                     }
                     else -> Log.i("ERROR", "DATA ERROR")
                 }
+                dialog.dismiss()
             }
 
             override fun onFailure(call: Call<NamedAPIResourceList>?, t: Throwable?) {
                 Log.i("ERROR", "NO DATA")
                 Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
 
         })
-
-
     }
 
 }
