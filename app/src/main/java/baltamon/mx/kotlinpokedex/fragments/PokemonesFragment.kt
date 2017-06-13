@@ -60,8 +60,8 @@ class PokemonesFragment : Fragment() {
             override fun onResponse(call: Call<NamedAPIResourceList>, response: Response<NamedAPIResourceList>) {
                 when (response.code()){
                     200 -> {
-                        val pokemonList: NamedAPIResourceList? = response.body()
-                        val adapter = RVAdapterPokemones(pokemonList!!.results, context)
+                        val pokemonList: NamedAPIResourceList = response.body()!!
+                        val adapter = RVAdapterPokemones(pokemonList.results, context)
                         recyclerView.adapter = adapter
                     }
                     else -> Log.i("ERROR", "DATA ERROR")

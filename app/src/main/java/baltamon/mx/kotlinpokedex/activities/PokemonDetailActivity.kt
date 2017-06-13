@@ -35,7 +35,6 @@ class PokemonDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pokemon_detail)
 
         setUpToolbar()
-        setUpTabView()
         loadPokemonInformation()
     }
 
@@ -56,8 +55,8 @@ class PokemonDetailActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Pokemon>?, response: Response<Pokemon>) {
                 when (response.code()){
                     200 -> {
-                        val pokemon: Pokemon? = response.body()
-                        showPokemonInformation(pokemon)
+                        val pokemon: Pokemon = response.body()!!
+                        setUpTabView(pokemon)
                     }
                 }
                 dialog.dismiss()
@@ -68,10 +67,6 @@ class PokemonDetailActivity : AppCompatActivity() {
                 showToast(t.toString())
             }
         })
-    }
-
-    fun showPokemonInformation(pokemon: Pokemon?){
-        showToast(pokemon!!.name)
     }
 
     fun showToast(text: String){
@@ -100,8 +95,8 @@ class PokemonDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    fun setUpTabView(){
-        view_pager.adapter = TabPokemonFragmentAdapter(supportFragmentManager)
+    fun setUpTabView(pokemon: Pokemon){
+        view_pager.adapter = TabPokemonFragmentAdapter(supportFragmentManager, pokemon)
         tab_layout.setupWithViewPager(view_pager)
     }
 }

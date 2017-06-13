@@ -6,15 +6,18 @@ import android.support.v4.app.FragmentPagerAdapter
 import baltamon.mx.kotlinpokedex.fragments.PokemonAbilitiesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonAboutFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonMovesFragment
+import baltamon.mx.kotlinpokedex.models.Pokemon
 
 /**
  * Created by Baltazar Rodriguez on 28/05/2017.
  */
-class TabPokemonFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class TabPokemonFragmentAdapter(fm: FragmentManager, pokemon: Pokemon) : FragmentPagerAdapter(fm) {
+
+    internal var pokemon: Pokemon = pokemon
 
     override fun getItem(position: Int): Fragment {
         when (position){
-            0 -> return PokemonAboutFragment()
+            0 -> return PokemonAboutFragment().newInstance(pokemon)
             1 -> return PokemonAbilitiesFragment()
             else -> return PokemonMovesFragment()
         }
