@@ -22,7 +22,8 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/pokemon_name"
                 android:textColor="@color/colorBlack"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textAllCaps="true"/>
 
             <ImageView
                 android:id="@+id/iv_pokemon_image"

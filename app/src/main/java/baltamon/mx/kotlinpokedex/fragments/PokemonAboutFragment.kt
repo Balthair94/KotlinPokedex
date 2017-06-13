@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.models.Pokemon
-import kotlinx.android.synthetic.main.fragment_pokemon_about.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_pokemon_about.view.*
 
 /**
  * Created by Baltazar Rodriguez on 28/05/2017.
@@ -29,13 +30,16 @@ class PokemonAboutFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_pokemon_about, container, false)
-        showDetails()
+        showDetails(view)
         return view
     }
 
-    fun showDetails(){
+    fun showDetails(view: View){
         val pokemon: Pokemon = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as Pokemon
-        tv_pokemon_name.text = pokemon.name
+        view.tv_pokemon_name.text = pokemon.name
+        view.tv_weight.text = "Weight: " + pokemon.weight.toString()
+        view.tv_hight.text = "Hight: " + pokemon.height.toString()
+        Picasso.with(context).load(pokemon.sprites.front_default).into(view.iv_pokemon_image)
     }
 
 }
