@@ -19,7 +19,7 @@ class TabPokemonFragmentAdapter(fm: FragmentManager, pokemon: Pokemon) : Fragmen
         when (position){
             0 -> return PokemonAboutFragment().newInstance(pokemon)
             1 -> return PokemonAbilitiesFragment().newInstance(pokemon)
-            else -> return PokemonMovesFragment()
+            else -> return PokemonMovesFragment().newInstance(pokemon)
         }
     }
 
