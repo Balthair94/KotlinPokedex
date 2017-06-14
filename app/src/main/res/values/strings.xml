@@ -18,4 +18,5 @@
     <string name="damage">Damage: 00</string>
     <string name="move_cl">Class: 00</string>
     <string name="dummy_description">Dummy description</string>
+    <string name="dummy_title">Dummy Title</string>
 </resources>
