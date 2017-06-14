@@ -40,6 +40,14 @@ class PokemonAboutFragment : Fragment() {
         view.tv_weight.text = "Weight: " + pokemon.weight.toString()
         view.tv_hight.text = "Hight: " + pokemon.height.toString()
         Picasso.with(context).load(pokemon.sprites.front_default).into(view.iv_pokemon_image)
+        Picasso.with(context).load(pokemon.sprites.front_default).into(view.iv_form1)
+        Picasso.with(context).load(pokemon.sprites.back_default).into(view.iv_form2)
+
+        var textTypes = "Types: "
+        for (item in pokemon.types){
+            textTypes += item.type.name + ", "
+        }
+        view.tv_types.text = textTypes
     }
 
 }

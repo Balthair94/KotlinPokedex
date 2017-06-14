@@ -94,14 +94,6 @@
 
                     android:src="@drawable/ic_pokemon" />
 
-                <ImageView
-                    android:id="@+id/iv_form3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-
-                    android:src="@drawable/ic_pokemon" />
-
             </LinearLayout>
 
         </LinearLayout>
