@@ -1,5 +1,6 @@
 package baltamon.mx.kotlinpokedex.interfaces
 
+import baltamon.mx.kotlinpokedex.models.Ability
 import baltamon.mx.kotlinpokedex.models.NamedAPIResourceList
 import baltamon.mx.kotlinpokedex.models.Pokemon
 import retrofit2.Call
@@ -15,5 +16,8 @@ interface RestClient {
 
     @GET("pokemon/{name}")
     fun getPokemon(@Path("name") pokemonName: String): Call<Pokemon>
+
+    @GET("ability/{name}")
+    fun getAbility(@Path("name") abilityName: String): Call<Ability>
 
 }

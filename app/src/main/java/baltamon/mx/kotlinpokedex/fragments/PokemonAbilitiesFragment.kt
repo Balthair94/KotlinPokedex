@@ -45,7 +45,7 @@ class PokemonAbilitiesFragment : Fragment() {
 
     fun loadAbilities(recyclerView: RecyclerView){
         val pokemon = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as Pokemon
-        var adapter = RVAdapterPokemonAbilities(pokemon.abilities, context)
+        var adapter = RVAdapterPokemonAbilities(pokemon.abilities, context, fragmentManager)
         recyclerView.adapter = adapter
     }
 
