@@ -38,6 +38,11 @@ class AbilityDialogFragment : DialogFragment(){
         return dialog
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_fragment_ability, container, false)
