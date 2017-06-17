@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:minWidth="1000dp"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlueGrey"
+        android:padding="10dp"
+        android:text="@string/move_detail"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/tv_loading_message"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:textColor="@color/colorBlack"
+        android:text="@string/loading"
+        android:textSize="@dimen/text_content_size"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/layout_main"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_move_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/move_name"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/items_title_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:id="@+id/tv_move_pp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pp"
+                android:textSize="@dimen/text_content_size" />
+
+            <TextView
+                android:id="@+id/tv_move_power"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/power"
+                android:textSize="@dimen/text_content_size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_move_damage_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/damage"
+            android:textSize="@dimen/text_content_size" />
+
+    </LinearLayout>
+
+</LinearLayout>

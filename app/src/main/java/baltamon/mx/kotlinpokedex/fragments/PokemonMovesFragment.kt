@@ -38,7 +38,7 @@ class PokemonMovesFragment : Fragment() {
 
     fun loadMoves(recyclerView: RecyclerView){
         val pokemon = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as Pokemon
-        var adapter = RVAdapterPokemonMoves(pokemon.moves, context)
+        var adapter = RVAdapterPokemonMoves(pokemon.moves, context, fragmentManager)
         recyclerView.adapter = adapter
     }
 

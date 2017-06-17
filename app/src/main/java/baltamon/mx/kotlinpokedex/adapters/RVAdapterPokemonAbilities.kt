@@ -37,7 +37,8 @@ class RVAdapterPokemonAbilities internal constructor(internal var abilities: Lis
     override fun onBindViewHolder(holder: AbilityViewHolder, position: Int) {
         holder.abilityName.text = abilities[position].ability.name
         holder.cardView.setOnClickListener {
-            val dialogFragment = AbilityDialogFragment().newInstance(abilities[position].ability)
+            val dialogFragment = AbilityDialogFragment().
+                    newInstance(abilities[position].ability)
             dialogFragment.show(fragmentManager, "Detail")
         }
     }
