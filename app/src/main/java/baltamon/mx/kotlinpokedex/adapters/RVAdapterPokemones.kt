@@ -18,11 +18,9 @@ import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 
 private const val INTENT_POKEMON_NAME = "pokemon_name"
 
-class RVAdapterPokemones internal constructor(pokemones: List<NamedAPIResource>, context: Context) :
+class RVAdapterPokemones internal constructor(internal var pokemones: ArrayList<NamedAPIResource>,
+                                              internal var context: Context) :
         RecyclerView.Adapter<RVAdapterPokemones.PokemonViewHolder>() {
-
-    internal var pokemones: List<NamedAPIResource> = pokemones
-    internal var context: Context = context
 
     class PokemonViewHolder internal constructor(itemView: View): RecyclerView.ViewHolder(itemView){
         internal var cv: CardView = itemView.findViewById(R.id.card_view) as CardView
