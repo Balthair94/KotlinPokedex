@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonMoves
+import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import baltamon.mx.kotlinpokedex.models.Pokemon
+import baltamon.mx.kotlinpokedex.models.PokemonMove
 import kotlinx.android.synthetic.main.fragment_pokemon_moves.view.*
 
 /**
@@ -21,24 +23,26 @@ private const val MY_OBJECT_KEY = "pokemon_object"
 
 class PokemonMovesFragment : Fragment() {
 
-    fun newInstance(pokemon: Pokemon): PokemonMovesFragment{
+    fun newInstance(moves: ArrayList<PokemonMove>): PokemonMovesFragment {
         val fragment = PokemonMovesFragment()
         val bundle = Bundle()
-        bundle.putParcelable(MY_OBJECT_KEY, pokemon)
+        bundle.putParcelableArrayList(MY_OBJECT_KEY, moves)
         fragment.arguments = bundle
         return fragment
     }
 
-    fun showMoves(view: View){
+    fun showMoves(view: View) {
         var recyclerView = view.recycler_view
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         loadMoves(recyclerView)
     }
 
-    fun loadMoves(recyclerView: RecyclerView){
-        val pokemon = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as Pokemon
-        var adapter = RVAdapterPokemonMoves(pokemon.moves, context, fragmentManager)
+    fun loadMoves(recyclerView: RecyclerView) {
+        val pokemonMoves = arguments.getParcelableArrayList<Parcelable>(MY_OBJECT_KEY) as ArrayList<PokemonMove>
+        val moves: ArrayList<NamedAPIResource> = ArrayList()
+        pokemonMoves.mapTo(moves) { it.move }
+        var adapter = RVAdapterPokemonMoves(moves, context, fragmentManager)
         recyclerView.adapter = adapter
     }
 

@@ -8,18 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.fragments.MoveDialogFragment
+import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import baltamon.mx.kotlinpokedex.models.PokemonMove
 import kotlinx.android.synthetic.main.item_title.view.*
 
 /**
  * Created by Baltazar Rodriguez on 14/06/2017.
  */
-class RVAdapterPokemonMoves internal constructor(moves: List<PokemonMove>, context: Context,
+class RVAdapterPokemonMoves internal constructor(internal var moves: ArrayList<NamedAPIResource>, internal var context: Context,
                                                  internal var fragmentManager: FragmentManager) :
         RecyclerView.Adapter<RVAdapterPokemonMoves.MoveViewHolder>() {
-
-    internal var moves = moves
-    internal var context = context
 
     class MoveViewHolder internal constructor(itemView: View): RecyclerView.ViewHolder(itemView){
         internal var moveName = itemView.tv_title_item
@@ -27,10 +25,10 @@ class RVAdapterPokemonMoves internal constructor(moves: List<PokemonMove>, conte
     }
 
     override fun onBindViewHolder(holder: MoveViewHolder, position: Int) {
-        holder.moveName.text = moves[position].move.name
+        holder.moveName.text = moves[position].name
         holder.cardView.setOnClickListener {
             val dialogFragment = MoveDialogFragment().
-                    newInstance(moves[position].move)
+                    newInstance(moves[position])
             dialogFragment.show(fragmentManager, "Detail")
         }
     }

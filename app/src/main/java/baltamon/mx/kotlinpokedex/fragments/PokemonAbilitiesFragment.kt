@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonAbilities
+import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import baltamon.mx.kotlinpokedex.models.Pokemon
+import baltamon.mx.kotlinpokedex.models.PokemonAbility
 import kotlinx.android.synthetic.main.fragment_pokemon_abilities.view.*
 
 /**
@@ -21,10 +23,10 @@ private const val MY_OBJECT_KEY = "pokemon_object"
 
 class PokemonAbilitiesFragment : Fragment() {
 
-    fun newInstance(pokemon: Pokemon): PokemonAbilitiesFragment{
+    fun newInstance(abilities: ArrayList<PokemonAbility>): PokemonAbilitiesFragment{
         val fragment = PokemonAbilitiesFragment()
         val bundle = Bundle()
-        bundle.putParcelable(MY_OBJECT_KEY, pokemon)
+        bundle.putParcelableArrayList(MY_OBJECT_KEY, abilities)
         fragment.arguments = bundle
         return fragment
     }
@@ -44,8 +46,10 @@ class PokemonAbilitiesFragment : Fragment() {
     }
 
     fun loadAbilities(recyclerView: RecyclerView){
-        val pokemon = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as Pokemon
-        var adapter = RVAdapterPokemonAbilities(pokemon.abilities, context, fragmentManager)
+        val pokemonAbilities = arguments.getIntegerArrayList(MY_OBJECT_KEY) as ArrayList<PokemonAbility>
+        val abilities: ArrayList<NamedAPIResource> = ArrayList()
+        pokemonAbilities.mapTo(abilities) { it.ability }
+        val adapter = RVAdapterPokemonAbilities(abilities, context, fragmentManager)
         recyclerView.adapter = adapter
     }
 

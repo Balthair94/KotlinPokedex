@@ -18,8 +18,8 @@ class TabPokemonFragmentAdapter(fm: FragmentManager, pokemon: Pokemon) : Fragmen
     override fun getItem(position: Int): Fragment {
         when (position){
             0 -> return PokemonAboutFragment().newInstance(pokemon)
-            1 -> return PokemonAbilitiesFragment().newInstance(pokemon)
-            else -> return PokemonMovesFragment().newInstance(pokemon)
+            1 -> return PokemonAbilitiesFragment().newInstance(pokemon.abilities)
+            else -> return PokemonMovesFragment().newInstance(pokemon.moves)
         }
     }
 

@@ -15,32 +15,38 @@
         android:textColor="@color/colorWhite"
         android:textSize="20sp" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_ability_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:text="@string/dummy_title"
-            android:textAllCaps="true"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/items_title_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_ability_description"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dummy_description"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_content_size" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_ability_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:text="@string/dummy_title"
+                android:textAllCaps="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/items_title_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_ability_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_description"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_content_size" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.fragments.AbilityDialogFragment
+import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import baltamon.mx.kotlinpokedex.models.PokemonAbility
 import kotlinx.android.synthetic.main.item_title.view.*
 
 /**
  * Created by Baltazar Rodriguez on 13/06/2017.
  */
-class RVAdapterPokemonAbilities internal constructor(internal var abilities: List<PokemonAbility>,
+class RVAdapterPokemonAbilities internal constructor(internal var abilities: ArrayList<NamedAPIResource>,
                                                      internal var context: Context,
                                                      internal var fragmentManager: FragmentManager) :
         RecyclerView.Adapter<RVAdapterPokemonAbilities.AbilityViewHolder>() {
@@ -35,10 +36,10 @@ class RVAdapterPokemonAbilities internal constructor(internal var abilities: Lis
     }
 
     override fun onBindViewHolder(holder: AbilityViewHolder, position: Int) {
-        holder.abilityName.text = abilities[position].ability.name
+        holder.abilityName.text = abilities[position].name
         holder.cardView.setOnClickListener {
             val dialogFragment = AbilityDialogFragment().
-                    newInstance(abilities[position].ability)
+                    newInstance(abilities[position])
             dialogFragment.show(fragmentManager, "Detail")
         }
     }
