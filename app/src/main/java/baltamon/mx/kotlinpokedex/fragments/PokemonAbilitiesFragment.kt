@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_pokemon_abilities.view.*
  * Created by Baltazar Rodriguez on 28/05/2017.
  */
 
-private const val MY_OBJECT_KEY = "pokemon_object"
+private const val MY_OBJECT_KEY = "abilities_list"
 
 class PokemonAbilitiesFragment : Fragment() {
 

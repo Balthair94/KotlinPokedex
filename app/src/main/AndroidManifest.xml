@@ -11,8 +11,7 @@
         android:roundIcon="@drawable/pokedex_icon"
         android:supportsRtl="true">
 
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".activities.DisplayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".activities.PokemonDetailActivity"

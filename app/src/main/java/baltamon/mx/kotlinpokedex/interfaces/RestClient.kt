@@ -13,9 +13,6 @@ interface RestClient {
     @get:GET("generation/1")
     val generation: Call<Generation>
 
-    @get:GET("pokemon/?limit=150")
-    val pokemones: Call<NamedAPIResourceList>
-
     @GET("pokemon/{name}")
     fun getPokemon(@Path("name") pokemonName: String): Call<Pokemon>
 

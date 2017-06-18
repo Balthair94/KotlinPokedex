@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_pokemon_about.view.*
  * Created by Baltazar Rodriguez on 28/05/2017.
  */
 
-private const val MY_OBJECT_KEY = "pokemon_object"
+private const val MY_OBJECT_KEY = "pokemon"
 
 class PokemonAboutFragment : Fragment() {
 

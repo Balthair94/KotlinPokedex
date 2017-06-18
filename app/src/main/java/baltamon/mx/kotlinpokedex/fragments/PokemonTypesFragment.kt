@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonMoves
+import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonTypes
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import kotlinx.android.synthetic.main.fragment_pokemon_moves.view.*
 
@@ -41,7 +42,7 @@ class PokemonTypesFragment : Fragment(){
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         val moves = arguments.getParcelableArrayList<Parcelable>(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
-        val adapter = RVAdapterPokemonMoves(moves, context, fragmentManager)
+        val adapter = RVAdapterPokemonTypes(moves, context)
 
         recyclerView.adapter = adapter
     }
