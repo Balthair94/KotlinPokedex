@@ -23,7 +23,7 @@ private const val MY_OBJECT_KEY = "pokemon_object"
 
 class PokemonMovesFragment : Fragment() {
 
-    fun newInstance(moves: ArrayList<PokemonMove>): PokemonMovesFragment {
+    fun newInstance(moves: ArrayList<NamedAPIResource>): PokemonMovesFragment {
         val fragment = PokemonMovesFragment()
         val bundle = Bundle()
         bundle.putParcelableArrayList(MY_OBJECT_KEY, moves)
@@ -32,16 +32,14 @@ class PokemonMovesFragment : Fragment() {
     }
 
     fun showMoves(view: View) {
-        var recyclerView = view.recycler_view
+        val recyclerView = view.recycler_view
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         loadMoves(recyclerView)
     }
 
     fun loadMoves(recyclerView: RecyclerView) {
-        val pokemonMoves = arguments.getParcelableArrayList<Parcelable>(MY_OBJECT_KEY) as ArrayList<PokemonMove>
-        val moves: ArrayList<NamedAPIResource> = ArrayList()
-        pokemonMoves.mapTo(moves) { it.move }
+        val moves = arguments.getParcelableArrayList<Parcelable>(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
         var adapter = RVAdapterPokemonMoves(moves, context, fragmentManager)
         recyclerView.adapter = adapter
     }

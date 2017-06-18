@@ -23,7 +23,7 @@ private const val MY_OBJECT_KEY = "pokemon_object"
 
 class PokemonAbilitiesFragment : Fragment() {
 
-    fun newInstance(abilities: ArrayList<PokemonAbility>): PokemonAbilitiesFragment{
+    fun newInstance(abilities: ArrayList<NamedAPIResource>): PokemonAbilitiesFragment{
         val fragment = PokemonAbilitiesFragment()
         val bundle = Bundle()
         bundle.putParcelableArrayList(MY_OBJECT_KEY, abilities)
@@ -46,9 +46,7 @@ class PokemonAbilitiesFragment : Fragment() {
     }
 
     fun loadAbilities(recyclerView: RecyclerView){
-        val pokemonAbilities = arguments.getIntegerArrayList(MY_OBJECT_KEY) as ArrayList<PokemonAbility>
-        val abilities: ArrayList<NamedAPIResource> = ArrayList()
-        pokemonAbilities.mapTo(abilities) { it.ability }
+        val abilities = arguments.getIntegerArrayList(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
         val adapter = RVAdapterPokemonAbilities(abilities, context, fragmentManager)
         recyclerView.adapter = adapter
     }

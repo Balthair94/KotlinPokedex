@@ -11,6 +11,7 @@ import android.widget.TextView
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.activities.PokemonDetailActivity
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
+import kotlinx.android.synthetic.main.item_title.view.*
 
 /**
  * Created by Baltazar Rodriguez on 11/06/2017.
@@ -23,8 +24,8 @@ class RVAdapterPokemones internal constructor(internal var pokemones: ArrayList<
         RecyclerView.Adapter<RVAdapterPokemones.PokemonViewHolder>() {
 
     class PokemonViewHolder internal constructor(itemView: View): RecyclerView.ViewHolder(itemView){
-        internal var cv: CardView = itemView.findViewById(R.id.card_view) as CardView
-        internal var textView: TextView = itemView.findViewById(R.id.tv_pokemon_name) as TextView
+        internal var cv: CardView = itemView.card_view
+        internal var textView: TextView = itemView.tv_title_item
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +33,7 @@ class RVAdapterPokemones internal constructor(internal var pokemones: ArrayList<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_pokemon, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false)
         val pvh = PokemonViewHolder(v)
         return pvh
     }

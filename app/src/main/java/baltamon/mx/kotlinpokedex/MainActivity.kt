@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
 import baltamon.mx.kotlinpokedex.fragments.PokemonMovesFragment
+import baltamon.mx.kotlinpokedex.fragments.PokemonTypesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonesFragment
 import baltamon.mx.kotlinpokedex.interfaces.RestClient
 import baltamon.mx.kotlinpokedex.models.Generation
@@ -78,7 +79,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when(fragment){
             1 -> fragmentTransaction.replace(R.id.frame_layout, PokemonesFragment().newInstance(pokemonesList))
-            2 -> fragmentTransaction.replace(R.id.frame_layout, PokemonMovesFragment())
+            2 -> fragmentTransaction.replace(R.id.frame_layout, PokemonMovesFragment().newInstance(movesList))
+            3 -> fragmentTransaction.replace(R.id.frame_layout, PokemonTypesFragment().newInstance(typesList))
             else -> showToast("No Fragment Selected")
         }
 
@@ -100,13 +102,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_pokemons -> loadFragment(1)
-            R.id.item_moves -> loadFragment(2)
-            R.id.item_abilities -> showToast("Abilities")
-            R.id.item_types -> showToast("Types")
+            R.id.item_pokemons -> {
+                loadFragment(1)
+                showToast("Pokemones")
+            }
+            R.id.item_moves -> {
+                loadFragment(2)
+                showToast("Moves")
+            }
+            R.id.item_abilities -> showToast("No Data")
+            R.id.item_types -> {
+                loadFragment(3)
+                showToast("Types")
+            }
             else -> showToast("No option selected")
         }
 
+        closeDrawer()
         return true
     }
 
