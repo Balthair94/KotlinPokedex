@@ -6,7 +6,7 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 10/06/2017.
  */
-data class PokemonType(val type: NamedAPIResource) : Parcelable {
+class PokemonType (val type: NamedAPIResource) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<PokemonType> = object : Parcelable.Creator<PokemonType> {
             override fun createFromParcel(source: Parcel): PokemonType = PokemonType(source)
@@ -15,7 +15,7 @@ data class PokemonType(val type: NamedAPIResource) : Parcelable {
     }
 
     constructor(source: Parcel) : this(
-            source.readParcelable<NamedAPIResource>(NamedAPIResource::class.java.classLoader)
+    source.readParcelable<NamedAPIResource>(NamedAPIResource::class.java.classLoader)
     )
 
     override fun describeContents() = 0
