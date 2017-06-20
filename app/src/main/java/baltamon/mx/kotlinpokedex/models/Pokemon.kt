@@ -6,14 +6,9 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 10/06/2017.
  */
-data class Pokemon(val id: Int,
-                   val name: String,
-                   val height: Int,
-                   val weight: Int,
-                   val sprites: PokemonSprites,
-                   val moves: ArrayList<PokemonMove>,
-                   val abilities: ArrayList<PokemonAbility>,
-                   val types: ArrayList<PokemonType>) : Parcelable {
+class Pokemon (val id: Int, val name: String, val height: Int, val weight: Int, val sprites: PokemonSprites,
+               val moves: ArrayList<PokemonMove>, val abilities: ArrayList<PokemonAbility>,
+               val types: ArrayList<PokemonType>) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Pokemon> = object : Parcelable.Creator<Pokemon> {
             override fun createFromParcel(source: Parcel): Pokemon = Pokemon(source)
@@ -22,14 +17,14 @@ data class Pokemon(val id: Int,
     }
 
     constructor(source: Parcel) : this(
-            source.readInt(),
-            source.readString(),
-            source.readInt(),
-            source.readInt(),
-            source.readParcelable<PokemonSprites>(PokemonSprites::class.java.classLoader),
-            source.createTypedArrayList(PokemonMove.CREATOR),
-            source.createTypedArrayList(PokemonAbility.CREATOR),
-            source.createTypedArrayList(PokemonType.CREATOR)
+    source.readInt(),
+    source.readString(),
+    source.readInt(),
+    source.readInt(),
+    source.readParcelable<PokemonSprites>(PokemonSprites::class.java.classLoader),
+    source.createTypedArrayList(PokemonMove.CREATOR),
+    source.createTypedArrayList(PokemonAbility.CREATOR),
+    source.createTypedArrayList(PokemonType.CREATOR)
     )
 
     override fun describeContents() = 0

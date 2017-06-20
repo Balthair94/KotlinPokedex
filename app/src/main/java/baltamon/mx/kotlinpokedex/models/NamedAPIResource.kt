@@ -6,17 +6,17 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 10/06/2017.
  */
-data class NamedAPIResource(val name: String, val url: String) : Parcelable {
+class NamedAPIResource (val name: String, val url: String) : Parcelable {
     companion object {
-        @JvmStatic val CREATOR: Parcelable.Creator<NamedAPIResource> = object : Parcelable.Creator<NamedAPIResource> {
+        @JvmField val CREATOR: Parcelable.Creator<NamedAPIResource> = object : Parcelable.Creator<NamedAPIResource> {
             override fun createFromParcel(source: Parcel): NamedAPIResource = NamedAPIResource(source)
             override fun newArray(size: Int): Array<NamedAPIResource?> = arrayOfNulls(size)
         }
     }
 
     constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString()
+    source.readString(),
+    source.readString()
     )
 
     override fun describeContents() = 0
