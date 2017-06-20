@@ -6,7 +6,7 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 10/06/2017.
  */
-class PokemonSprites (val front_default: String, val back_default: String) : Parcelable {
+data class PokemonSprites(val front_default: String, val back_default: String) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<PokemonSprites> = object : Parcelable.Creator<PokemonSprites> {
             override fun createFromParcel(source: Parcel): PokemonSprites = PokemonSprites(source)
@@ -15,8 +15,8 @@ class PokemonSprites (val front_default: String, val back_default: String) : Par
     }
 
     constructor(source: Parcel) : this(
-    source.readString(),
-    source.readString()
+            source.readString(),
+            source.readString()
     )
 
     override fun describeContents() = 0

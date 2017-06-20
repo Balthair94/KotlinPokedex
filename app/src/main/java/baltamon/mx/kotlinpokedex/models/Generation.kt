@@ -6,23 +6,28 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 17/06/2017.
  */
-class Generation (val id: Int, val name: String, val abilities: ArrayList<NamedAPIResource>,
-                  val moves: ArrayList<NamedAPIResource>, val pokemon_species: ArrayList<NamedAPIResource>,
-                  val types: ArrayList<NamedAPIResource>) : Parcelable {
+data class Generation(val id: Int,
+                      val name: String,
+                      val abilities: ArrayList<NamedAPIResource>,
+                      val moves: ArrayList<NamedAPIResource>,
+                      val pokemon_species: ArrayList<NamedAPIResource>,
+                      val types: ArrayList<NamedAPIResource>) : Parcelable {
+
     companion object {
-        @JvmField val CREATOR: Parcelable.Creator<Generation> = object : Parcelable.Creator<Generation> {
-            override fun createFromParcel(source: Parcel): Generation = Generation(source)
-            override fun newArray(size: Int): Array<Generation?> = arrayOfNulls(size)
-        }
+        @JvmField val CREATOR: Parcelable.Creator<Generation> =
+                object : Parcelable.Creator<Generation> {
+                    override fun createFromParcel(source: Parcel): Generation = Generation(source)
+                    override fun newArray(size: Int): Array<Generation?> = arrayOfNulls(size)
+                }
     }
 
     constructor(source: Parcel) : this(
-    source.readInt(),
-    source.readString(),
-    source.createTypedArrayList(NamedAPIResource.CREATOR),
-    source.createTypedArrayList(NamedAPIResource.CREATOR),
-    source.createTypedArrayList(NamedAPIResource.CREATOR),
-    source.createTypedArrayList(NamedAPIResource.CREATOR)
+            source.readInt(),
+            source.readString(),
+            source.createTypedArrayList(NamedAPIResource.CREATOR),
+            source.createTypedArrayList(NamedAPIResource.CREATOR),
+            source.createTypedArrayList(NamedAPIResource.CREATOR),
+            source.createTypedArrayList(NamedAPIResource.CREATOR)
     )
 
     override fun describeContents() = 0
