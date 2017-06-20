@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fragment_pokemon_about.view.*
 private const val MY_OBJECT_KEY = "pokemon"
 
 class PokemonAboutFragment : Fragment() {
-
     companion object {
         fun newInstance(pokemon: Pokemon): PokemonAboutFragment {
             val fragment = PokemonAboutFragment()
@@ -39,8 +38,9 @@ class PokemonAboutFragment : Fragment() {
     fun showDetails(view: View) {
         val pokemon: Pokemon = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as Pokemon
         view.tv_pokemon_name.text = pokemon.name
-        view.tv_weight.text = "Weight: " + pokemon.weight.toString()
-        view.tv_hight.text = "Hight: " + pokemon.height.toString()
+        view.tv_weight.text = "Weight: ${pokemon.weight}"
+        view.tv_hight.text = "Hight: ${pokemon.height}"
+
         Picasso.with(context).load(pokemon.sprites.front_default).into(view.iv_pokemon_image)
         Picasso.with(context).load(pokemon.sprites.front_default).into(view.iv_form1)
         Picasso.with(context).load(pokemon.sprites.back_default).into(view.iv_form2)
