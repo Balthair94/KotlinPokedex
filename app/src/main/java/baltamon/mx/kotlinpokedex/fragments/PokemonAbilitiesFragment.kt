@@ -39,7 +39,7 @@ class PokemonAbilitiesFragment : Fragment() {
     }
 
     fun showAbilities(view: View){
-        var recyclerView = view.recycler_view
+        val recyclerView = view.recycler_view
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         loadAbilities(recyclerView)
@@ -47,7 +47,7 @@ class PokemonAbilitiesFragment : Fragment() {
 
     fun loadAbilities(recyclerView: RecyclerView){
         val abilities = arguments.getIntegerArrayList(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
-        val adapter = RVAdapterPokemonAbilities(abilities, context, fragmentManager)
+        val adapter = RVAdapterPokemonAbilities(abilities, fragmentManager)
         recyclerView.adapter = adapter
     }
 

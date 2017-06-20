@@ -5,20 +5,18 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.TabPokemonFragmentAdapter
 import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
+import baltamon.mx.kotlinpokedex.interfaces.buildGson
+import baltamon.mx.kotlinpokedex.interfaces.buildRetrofit
 import baltamon.mx.kotlinpokedex.models.Pokemon
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
+import baltamon.mx.kotlinpokedex.showToast
 import kotlinx.android.synthetic.main.activity_pokemon_detail.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Baltazar Rodriguez on 28/05/2017.
@@ -37,14 +35,9 @@ class PokemonDetailActivity : AppCompatActivity() {
     }
 
     fun loadPokemonInformation() {
-        val dialog = ProgressDialog.show(this, "Loading", "Loading, please wait...", true)
 
-        val gson = GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-        val retrofit = Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+        val dialog = ProgressDialog.show(this, getString(R.string.loading), "Loading, please wait...", true)
+        val retrofit = buildRetrofit(buildGson())
 
         val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.getPokemon(intent.getStringExtra(INTENT_POKEMON_NAME))
@@ -52,10 +45,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Pokemon> {
             override fun onResponse(call: Call<Pokemon>?, response: Response<Pokemon>) {
                 when (response.code()) {
-                    200 -> {
-                        val pokemon: Pokemon = response.body()!!
-                        setUpTabView(pokemon)
-                    }
+                    200 -> response.body()?.let { setUpTabView(it) }
                 }
                 dialog.dismiss()
             }
@@ -65,10 +55,6 @@ class PokemonDetailActivity : AppCompatActivity() {
                 showToast(t.toString())
             }
         })
-    }
-
-    fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
