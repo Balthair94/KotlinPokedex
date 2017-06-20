@@ -3,14 +3,13 @@ package baltamon.mx.kotlinpokedex.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonAbilities
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
-import kotlinx.android.synthetic.main.fragment_pokemon_abilities.view.*
+import kotlinx.android.synthetic.main.fragment_pokemon_abilities.*
 
 /**
  * Created by Baltazar Rodriguez on 28/05/2017.
@@ -31,22 +30,19 @@ class PokemonAbilitiesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_pokemon_abilities, container, false)
-        showAbilities(view)
-        return view
+        return inflater.inflate(R.layout.fragment_pokemon_abilities, container, false)
     }
 
-    fun showAbilities(view: View) {
-        val recyclerView = view.recycler_view
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        loadAbilities(recyclerView)
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showAbilities()
     }
 
-    fun loadAbilities(recyclerView: RecyclerView) {
+    fun showAbilities() {
         val abilities = arguments.getIntegerArrayList(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
-        val adapter = RVAdapterPokemonAbilities(abilities, fragmentManager)
-        recyclerView.adapter = adapter
-    }
 
+        recycler_view.setHasFixedSize(true)
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.adapter = RVAdapterPokemonAbilities(abilities, fragmentManager)
+    }
 }
