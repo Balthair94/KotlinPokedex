@@ -8,7 +8,7 @@ import retrofit2.http.Path
 /**
  * Created by Baltazar Rodriguez on 11/06/2017.
  */
-interface RestClient {
+interface PokeAPIClient {
 
     @get:GET("generation/1")
     val generation: Call<Generation>

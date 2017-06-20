@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
-import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemones
+import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemon
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 
 /**
@@ -43,7 +43,7 @@ class PokemonesFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val pokemonList = arguments.getParcelableArrayList<Parcelable>(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
-        val adapter = RVAdapterPokemones(pokemonList, context)
+        val adapter = RVAdapterPokemon(pokemonList, context)
         recyclerView.adapter = adapter
     }
 

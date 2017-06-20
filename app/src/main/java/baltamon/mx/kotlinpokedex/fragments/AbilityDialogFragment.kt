@@ -9,17 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
+import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
+import baltamon.mx.kotlinpokedex.interfaces.buildGson
+import baltamon.mx.kotlinpokedex.interfaces.buildRetrofit
 import baltamon.mx.kotlinpokedex.models.Ability
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.dialog_fragment_ability.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Baltazar Rodriguez on 15/06/2017.
@@ -27,9 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val MY_OBJECT_KEY = "pokemon_ability"
 
-class AbilityDialogFragment : DialogFragment(){
+class AbilityDialogFragment : DialogFragment() {
 
-    fun newInstance(ability: NamedAPIResource) : AbilityDialogFragment{
+    fun newInstance(ability: NamedAPIResource): AbilityDialogFragment {
         val dialog = AbilityDialogFragment()
         val bundle = Bundle()
         bundle.putParcelable(MY_OBJECT_KEY, ability)
@@ -48,32 +46,28 @@ class AbilityDialogFragment : DialogFragment(){
         return view
     }
 
-    fun showAbilityInformation(view: View){
+    fun showAbilityInformation(view: View) {
         val ability = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as NamedAPIResource
         view.tv_ability_name.text = ability.name
-        view.tv_ability_description.text = "Loading..."
+        view.tv_ability_description.text = getString(R.string.loading)
         loadAbility(ability.name, view)
 
     }
 
-    fun loadAbility(name: String, view: View){
-        val gson = GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-        val retrofit = Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+    fun loadAbility(name: String, view: View) {
+        val retrofit = buildRetrofit(buildGson())
 
-        val restClient = retrofit.create(RestClient::class.java)
+        val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.getAbility(name)
 
-        call.enqueue(object: Callback<Ability>{
+        call.enqueue(object : Callback<Ability> {
             override fun onResponse(call: Call<Ability>?, response: Response<Ability>) {
 
-                when(response.code()){
+                when (response.code()) {
                     200 -> {
-                        val ability = response.body()!!
-                        view.tv_ability_description.text = ability.effect_entries[0].effect
+                        response.body()?.let {
+                            view.tv_ability_description.text = it.effect_entries[0].effect
+                        }
                     }
                     else -> Log.i("ERROR", "DATA ERROR")
                 }
