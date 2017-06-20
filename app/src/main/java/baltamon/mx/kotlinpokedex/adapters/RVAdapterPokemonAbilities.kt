@@ -30,7 +30,7 @@ class RVAdapterPokemonAbilities(val abilities: ArrayList<NamedAPIResource>,
     override fun onBindViewHolder(holder: AbilityViewHolder, position: Int) {
         holder.tvAbilityName.text = abilities[position].name
         holder.cardView.setOnClickListener {
-            val dialogFragment = AbilityDialogFragment().newInstance(abilities[position])
+            val dialogFragment = AbilityDialogFragment.newInstance(abilities[position])
             dialogFragment.show(fragmentManager, "Detail")
         }
     }

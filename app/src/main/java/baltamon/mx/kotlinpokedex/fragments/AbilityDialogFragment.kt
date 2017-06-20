@@ -7,13 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
 import baltamon.mx.kotlinpokedex.interfaces.buildGson
 import baltamon.mx.kotlinpokedex.interfaces.buildRetrofit
 import baltamon.mx.kotlinpokedex.models.Ability
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
+import baltamon.mx.kotlinpokedex.showToast
 import kotlinx.android.synthetic.main.dialog_fragment_ability.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,13 +26,14 @@ import retrofit2.Response
 private const val MY_OBJECT_KEY = "pokemon_ability"
 
 class AbilityDialogFragment : DialogFragment() {
-
-    fun newInstance(ability: NamedAPIResource): AbilityDialogFragment {
-        val dialog = AbilityDialogFragment()
-        val bundle = Bundle()
-        bundle.putParcelable(MY_OBJECT_KEY, ability)
-        dialog.arguments = bundle
-        return dialog
+    companion object {
+        fun newInstance(ability: NamedAPIResource): AbilityDialogFragment {
+            val dialog = AbilityDialogFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(MY_OBJECT_KEY, ability)
+            dialog.arguments = bundle
+            return dialog
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -51,18 +52,15 @@ class AbilityDialogFragment : DialogFragment() {
         view.tv_ability_name.text = ability.name
         view.tv_ability_description.text = getString(R.string.loading)
         loadAbility(ability.name, view)
-
     }
 
     fun loadAbility(name: String, view: View) {
         val retrofit = buildRetrofit(buildGson())
-
         val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.getAbility(name)
 
         call.enqueue(object : Callback<Ability> {
             override fun onResponse(call: Call<Ability>?, response: Response<Ability>) {
-
                 when (response.code()) {
                     200 -> {
                         response.body()?.let {
@@ -71,14 +69,12 @@ class AbilityDialogFragment : DialogFragment() {
                     }
                     else -> Log.i("ERROR", "DATA ERROR")
                 }
-
             }
 
             override fun onFailure(call: Call<Ability>?, t: Throwable?) {
-                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+                context.showToast(t.toString())
                 dismiss()
             }
-
         })
     }
 

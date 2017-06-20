@@ -27,12 +27,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val MY_OBJECT_KEY = "pokemon_move"
 
 class MoveDialogFragment : DialogFragment() {
-    fun newInstance(move: NamedAPIResource): MoveDialogFragment {
-        val dialog = MoveDialogFragment()
-        val bundle = Bundle()
-        bundle.putParcelable(MY_OBJECT_KEY, move)
-        dialog.arguments = bundle
-        return dialog
+    companion object {
+        fun newInstance(move: NamedAPIResource): MoveDialogFragment {
+            val dialog = MoveDialogFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(MY_OBJECT_KEY, move)
+            dialog.arguments = bundle
+            return dialog
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

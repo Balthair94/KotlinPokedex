@@ -43,7 +43,7 @@ class PokemonTypesFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         val moves = arguments.getParcelableArrayList<Parcelable>(MY_OBJECT_KEY) as ArrayList<NamedAPIResource>
-        val adapter = RVAdapterPokemonTypes(moves, context)
+        val adapter = RVAdapterPokemonTypes(moves)
 
         recyclerView.adapter = adapter
     }
