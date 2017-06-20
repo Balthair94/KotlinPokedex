@@ -1,28 +1,16 @@
 package baltamon.mx.kotlinpokedex.fragments
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemones
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
-import baltamon.mx.kotlinpokedex.models.NamedAPIResourceList
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Baltazar Rodriguez on 31/05/2017.
@@ -31,13 +19,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val MY_OBJECT_KEY = "pokemones_list"
 
 class PokemonesFragment : Fragment() {
+    companion object {
+        fun newInstance(pokemones: ArrayList<NamedAPIResource>): PokemonesFragment {
 
-    fun newInstance(pokemones: ArrayList<NamedAPIResource>): PokemonesFragment{
-        val fragment = PokemonesFragment()
-        val bundle = Bundle()
-        bundle.putParcelableArrayList(MY_OBJECT_KEY, pokemones)
-        fragment.arguments = bundle
-        return fragment
+            val fragment = PokemonesFragment()
+            val bundle = Bundle()
+            bundle.putParcelableArrayList(MY_OBJECT_KEY, pokemones)
+            fragment.arguments = bundle
+            return fragment
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

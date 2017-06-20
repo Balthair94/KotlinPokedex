@@ -4,17 +4,16 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.Toast
 import baltamon.mx.kotlinpokedex.fragments.PokemonMovesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonTypesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonesFragment
 import baltamon.mx.kotlinpokedex.interfaces.RestClient
 import baltamon.mx.kotlinpokedex.models.Generation
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
-import baltamon.mx.kotlinpokedex.models.PokemonMove
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,40 +25,71 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    var pokemonesList: ArrayList<NamedAPIResource> = ArrayList()
-    var movesList: ArrayList<NamedAPIResource> = ArrayList()
-    var typesList: ArrayList<NamedAPIResource> = ArrayList()
+    var pokemonList = arrayListOf<NamedAPIResource>() //This should change to an object,
+    var movesList = arrayListOf<NamedAPIResource>() // because all the three arrayList are
+    var typesList = arrayListOf<NamedAPIResource>() // For the same object...
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setToolbar()
-        setUpNavigationView()
+        setUpNavigationView(this)
         loadPokemonGeneration()
     }
 
-    fun loadPokemonGeneration(){
-        val dialog = ProgressDialog.show(this, "Loading", "Loading, please wait...", true)
+    fun setToolbar() {
+        toolbar.setTitleTextColor(Color.WHITE)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.title = getString(R.string.title_main_pokedex)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+    }
+
+    fun setUpNavigationView(navigationListener: NavigationView.OnNavigationItemSelectedListener) =
+            navigation_view.setNavigationItemSelectedListener(navigationListener)
+
+    fun loadFragment(fragmentId: Int) {
+        val replaceFragment = when (fragmentId) {
+            1 -> PokemonesFragment.newInstance(pokemonList)
+            2 -> PokemonMovesFragment.newInstance(movesList)
+            3 -> PokemonTypesFragment.newInstance(typesList)
+            else -> {
+                showToast("No Fragment Selected")
+            }
+        }
+
+        if (replaceFragment is Fragment) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, replaceFragment)
+                    .commit()
+        }
+    }
+
+    fun loadPokemonGeneration() {
+        val dialog = ProgressDialog.show(this, getString(R.string.loading), "Loading, please wait...", true)
 
         val gson = GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create()
-        val retrofit = Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/")
+        val retrofit = Retrofit.Builder()
+                .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
         val restClient = retrofit.create(RestClient::class.java)
         val call = restClient.generation
 
-        call.enqueue(object: Callback<Generation>{
+        call.enqueue(object : Callback<Generation> {
             override fun onResponse(call: Call<Generation>?, response: Response<Generation>) {
-                when(response.code()){
+                when (response.code()) {
                     200 -> {
-                        val generation = response.body()!!
-                        pokemonesList = generation.pokemon_species
-                        movesList = generation.moves
-                        typesList = generation.types
+                        response.body()?.let {
+                            pokemonList = it.pokemon_species
+                            movesList = it.moves
+                            typesList = it.types
+                        }
                         loadFragment(1)
                     }
                 }
@@ -74,83 +104,51 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    fun loadFragment(fragment: Int){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-
-        when(fragment){
-            1 -> fragmentTransaction.replace(R.id.frame_layout, PokemonesFragment().newInstance(pokemonesList))
-            2 -> fragmentTransaction.replace(R.id.frame_layout, PokemonMovesFragment().newInstance(movesList))
-            3 -> fragmentTransaction.replace(R.id.frame_layout, PokemonTypesFragment().newInstance(typesList))
-            else -> showToast("No Fragment Selected")
-        }
-
-        fragmentTransaction.commit()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> openDrawer()
+            android.R.id.home -> toggleDrawer()
         }
 
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
-        if (isDrawerOpen()) closeDrawer()
+        if (isDrawerOpen()) toggleDrawer(false)
         else super.onBackPressed()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        val toastMessage = when (item.itemId) {
             R.id.item_pokemons -> {
                 loadFragment(1)
-                showToast("Pokemones")
+                "Pokemon"
             }
             R.id.item_moves -> {
                 loadFragment(2)
-                showToast("Moves")
+                "Moves"
             }
-            R.id.item_abilities -> showToast("No Data")
+            R.id.item_abilities -> "No Data"
             R.id.item_types -> {
                 loadFragment(3)
-                showToast("Types")
+                "Types"
             }
-            else -> showToast("No option selected")
+            else -> "No option selected"
         }
 
-        closeDrawer()
+        showToast(toastMessage)
+        toggleDrawer(false)
+
         return true
     }
 
-    fun setUpNavigationView() {
-        navigation_view.setNavigationItemSelectedListener(this)
+    fun toggleDrawer(shouldOpen: Boolean = true) {
+        if (shouldOpen) {
+            drawer_layout.openDrawer(GravityCompat.START)
+        } else {
+            drawer_layout.closeDrawers()
+        }
     }
 
-
-    fun setToolbar() {
-        toolbar.setTitleTextColor(Color.WHITE)
-        setSupportActionBar(toolbar)
-
-        supportActionBar?.title = "Pokedex"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
-    }
-
-    fun openDrawer() {
-        drawer_layout.openDrawer(GravityCompat.START)
-    }
-
-    fun closeDrawer() {
-        drawer_layout.closeDrawers()
-    }
-
-    fun isDrawerOpen(): Boolean {
-        return drawer_layout.isDrawerOpen(GravityCompat.START)
-    }
-
-    fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
+    fun isDrawerOpen(): Boolean =
+            drawer_layout.isDrawerOpen(GravityCompat.START)
 }

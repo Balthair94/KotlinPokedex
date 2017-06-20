@@ -17,6 +17,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "API_URL", '"http://pokeapi.co/api/v2/'
+        }
+
+        debug {
+            buildConfigField "String", "API_URL", '"http://pokeapi.co/api/v2/'
         }
     }
 }
