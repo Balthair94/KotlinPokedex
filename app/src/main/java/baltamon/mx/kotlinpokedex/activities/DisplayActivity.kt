@@ -10,8 +10,7 @@ import baltamon.mx.kotlinpokedex.R
 /**
  * Created by Baltazar Rodriguez on 18/06/2017.
  */
-class DisplayActivity: AppCompatActivity() {
-
+class DisplayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display)
@@ -20,7 +19,5 @@ class DisplayActivity: AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }, 3000)
-
     }
-
 }

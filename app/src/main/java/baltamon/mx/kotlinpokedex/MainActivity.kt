@@ -11,18 +11,16 @@ import android.view.MenuItem
 import baltamon.mx.kotlinpokedex.fragments.PokemonMovesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonTypesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonesFragment
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
+import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
+import baltamon.mx.kotlinpokedex.interfaces.buildGson
+import baltamon.mx.kotlinpokedex.interfaces.buildRetrofit
 import baltamon.mx.kotlinpokedex.models.Generation
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var pokemonList = arrayListOf<NamedAPIResource>() //This should change to an object,
@@ -70,15 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun loadPokemonGeneration() {
         val dialog = ProgressDialog.show(this, getString(R.string.loading), "Loading, please wait...", true)
 
-        val gson = GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-        val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.API_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-
-        val restClient = retrofit.create(RestClient::class.java)
+        val restClient = buildRetrofit(buildGson()).create(PokeAPIClient::class.java)
         val call = restClient.generation
 
         call.enqueue(object : Callback<Generation> {
