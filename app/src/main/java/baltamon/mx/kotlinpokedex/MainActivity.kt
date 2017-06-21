@@ -11,7 +11,7 @@ import android.view.MenuItem
 import baltamon.mx.kotlinpokedex.fragments.PokemonMovesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonTypesFragment
 import baltamon.mx.kotlinpokedex.fragments.PokemonesFragment
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
+import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
 import baltamon.mx.kotlinpokedex.models.Generation
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import com.google.gson.FieldNamingPolicy
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
-        val restClient = retrofit.create(RestClient::class.java)
+        val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.generation
 
         call.enqueue(object : Callback<Generation> {
