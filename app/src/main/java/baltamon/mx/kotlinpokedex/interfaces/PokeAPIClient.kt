@@ -1,8 +1,8 @@
 package baltamon.mx.kotlinpokedex.interfaces
 
-import baltamon.mx.kotlinpokedex.models.Ability
+import baltamon.mx.kotlinpokedex.data.Ability
+import baltamon.mx.kotlinpokedex.data.Move
 import baltamon.mx.kotlinpokedex.models.Generation
-import baltamon.mx.kotlinpokedex.models.Move
 import baltamon.mx.kotlinpokedex.models.Pokemon
 import retrofit2.Call
 import retrofit2.http.GET
