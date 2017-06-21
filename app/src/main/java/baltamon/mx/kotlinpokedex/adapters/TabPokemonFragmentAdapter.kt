@@ -21,7 +21,7 @@ class TabPokemonFragmentAdapter(fm: FragmentManager, val pokemon: Pokemon) : Fra
                 1 -> {
                     val abilities: ArrayList<NamedAPIResource> = ArrayList()
                     pokemon.abilities.mapTo(abilities) { it.ability }
-                    PokemonAbilitiesFragment().newInstance(abilities)
+                    PokemonAbilitiesFragment.newInstance(abilities)
                 }
                 else -> {
                     val moves: ArrayList<NamedAPIResource> = ArrayList()

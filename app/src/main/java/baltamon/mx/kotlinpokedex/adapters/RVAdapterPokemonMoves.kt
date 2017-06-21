@@ -27,8 +27,7 @@ class RVAdapterPokemonMoves(val moves: ArrayList<NamedAPIResource>,
     override fun onBindViewHolder(holder: MoveViewHolder, position: Int) {
         holder.tvMoveName.text = moves[position].name
         holder.cardView.setOnClickListener {
-            val dialogFragment = MoveDialogFragment().
-                    newInstance(moves[position])
+            val dialogFragment = MoveDialogFragment.newInstance(moves[position])
             dialogFragment.show(fragmentManager, "Detail")
         }
     }
