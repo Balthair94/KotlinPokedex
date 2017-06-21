@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
-import baltamon.mx.kotlinpokedex.models.Move
+import baltamon.mx.kotlinpokedex.data.Move
+import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -26,8 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val MY_OBJECT_KEY = "pokemon_move"
 
-class MoveDialogFragment: DialogFragment() {
-    fun newInstance(move: NamedAPIResource): MoveDialogFragment{
+class MoveDialogFragment : DialogFragment() {
+    fun newInstance(move: NamedAPIResource): MoveDialogFragment {
         val dialog = MoveDialogFragment()
         val bundle = Bundle()
         bundle.putParcelable(MY_OBJECT_KEY, move)
@@ -42,13 +42,13 @@ class MoveDialogFragment: DialogFragment() {
         return view
     }
 
-    fun showMoveInformation(view: View){
+    fun showMoveInformation(view: View) {
         val move = arguments.getParcelable<Parcelable>(MY_OBJECT_KEY) as NamedAPIResource
         view.tv_move_name.text = move.name
         loadMove(view, move.name)
     }
 
-    fun loadMove(view: View, name: String){
+    fun loadMove(view: View, name: String) {
         val gson = GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create()
@@ -56,13 +56,13 @@ class MoveDialogFragment: DialogFragment() {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
-        val restClient = retrofit.create(RestClient::class.java)
+        val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.getMove(name)
 
-        call.enqueue(object: Callback<Move>{
+        call.enqueue(object : Callback<Move> {
 
             override fun onResponse(call: Call<Move>?, response: Response<Move>) {
-                when(response.code()){
+                when (response.code()) {
                     200 -> {
                         val move = response.body()!!
                         view.tv_loading_message.visibility = View.GONE

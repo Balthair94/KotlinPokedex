@@ -1,8 +1,6 @@
 package baltamon.mx.kotlinpokedex.activities
 
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -10,7 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.TabPokemonFragmentAdapter
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
+import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
 import baltamon.mx.kotlinpokedex.models.Pokemon
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -38,7 +36,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         loadPokemonInformation()
     }
 
-    fun loadPokemonInformation(){
+    fun loadPokemonInformation() {
         val dialog = ProgressDialog.show(this, "Loading", "Loading, please wait...", true)
 
         val gson = GsonBuilder()
@@ -48,12 +46,12 @@ class PokemonDetailActivity : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
-        val restClient = retrofit.create(RestClient::class.java)
+        val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.getPokemon(intent.getStringExtra(INTENT_POKEMON_NAME))
 
-        call.enqueue(object: Callback<Pokemon> {
+        call.enqueue(object : Callback<Pokemon> {
             override fun onResponse(call: Call<Pokemon>?, response: Response<Pokemon>) {
-                when (response.code()){
+                when (response.code()) {
                     200 -> {
                         val pokemon: Pokemon = response.body()!!
                         setUpTabView(pokemon)
@@ -69,12 +67,12 @@ class PokemonDetailActivity : AppCompatActivity() {
         })
     }
 
-    fun showToast(text: String){
+    fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
@@ -95,7 +93,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    fun setUpTabView(pokemon: Pokemon){
+    fun setUpTabView(pokemon: Pokemon) {
         view_pager.adapter = TabPokemonFragmentAdapter(supportFragmentManager, pokemon)
         tab_layout.setupWithViewPager(view_pager)
     }
