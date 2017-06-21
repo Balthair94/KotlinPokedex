@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
-import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonMoves
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonTypes
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 import kotlinx.android.synthetic.main.fragment_pokemon_moves.view.*
@@ -19,14 +18,16 @@ import kotlinx.android.synthetic.main.fragment_pokemon_moves.view.*
 
 private const val MY_OBJECT_KEY = "types_list"
 
-class PokemonTypesFragment : Fragment(){
+class PokemonTypesFragment : Fragment() {
 
-    fun newInstance(types: ArrayList<NamedAPIResource>): PokemonTypesFragment{
-        val fragment = PokemonTypesFragment()
-        val bundle = Bundle()
-        bundle.putParcelableArrayList(MY_OBJECT_KEY, types)
-        fragment.arguments = bundle
-        return fragment
+    companion object {
+        fun newInstance(types: ArrayList<NamedAPIResource>): PokemonTypesFragment {
+            val fragment = PokemonTypesFragment()
+            val bundle = Bundle()
+            bundle.putParcelableArrayList(MY_OBJECT_KEY, types)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +37,7 @@ class PokemonTypesFragment : Fragment(){
         return view
     }
 
-    fun showMoves(view: View){
+    fun showMoves(view: View) {
         val recyclerView = view.recycler_view
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)

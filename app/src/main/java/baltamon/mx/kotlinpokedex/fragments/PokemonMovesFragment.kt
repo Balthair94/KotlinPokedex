@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.RVAdapterPokemonMoves
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
-import baltamon.mx.kotlinpokedex.models.Pokemon
-import baltamon.mx.kotlinpokedex.models.PokemonMove
 import kotlinx.android.synthetic.main.fragment_pokemon_moves.view.*
 
 /**
@@ -23,12 +21,14 @@ private const val MY_OBJECT_KEY = "moves_list"
 
 class PokemonMovesFragment : Fragment() {
 
-    fun newInstance(moves: ArrayList<NamedAPIResource>): PokemonMovesFragment {
-        val fragment = PokemonMovesFragment()
-        val bundle = Bundle()
-        bundle.putParcelableArrayList(MY_OBJECT_KEY, moves)
-        fragment.arguments = bundle
-        return fragment
+    companion object {
+        fun newInstance(moves: ArrayList<NamedAPIResource>): PokemonMovesFragment {
+            val fragment = PokemonMovesFragment()
+            val bundle = Bundle()
+            bundle.putParcelableArrayList(MY_OBJECT_KEY, moves)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     fun showMoves(view: View) {
