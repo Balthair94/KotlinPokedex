@@ -3,7 +3,8 @@ package baltamon.mx.kotlinpokedex.data
 import baltamon.mx.kotlinpokedex.models.NamedAPIResource
 
 /**
- * Created by Baltazar Rodriguez on 10/06/2017.
+ * Created by Sier
+ * 
  */
 data class Ability (val id: Int,
                     val name: String,
