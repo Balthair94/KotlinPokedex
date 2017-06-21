@@ -1,9 +1,6 @@
 package baltamon.mx.kotlinpokedex.interfaces
 
-import baltamon.mx.kotlinpokedex.data.Ability
-import baltamon.mx.kotlinpokedex.data.Move
-import baltamon.mx.kotlinpokedex.models.Generation
-import baltamon.mx.kotlinpokedex.models.Pokemon
+import baltamon.mx.kotlinpokedex.models.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,7 +8,8 @@ import retrofit2.http.Path
 /**
  * Created by Baltazar Rodriguez on 11/06/2017.
  */
-interface PokeAPIClient {
+interface RestClient {
+
     @get:GET("generation/1")
     val generation: Call<Generation>
 
@@ -23,4 +21,5 @@ interface PokeAPIClient {
 
     @GET("move/{name}")
     fun getMove(@Path("name") moveName: String): Call<Move>
+
 }
