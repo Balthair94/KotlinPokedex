@@ -1,26 +1,22 @@
 package baltamon.mx.kotlinpokedex.activities
 
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.Toast
 import baltamon.mx.kotlinpokedex.R
 import baltamon.mx.kotlinpokedex.adapters.TabPokemonFragmentAdapter
-import baltamon.mx.kotlinpokedex.interfaces.RestClient
+import baltamon.mx.kotlinpokedex.interfaces.PokeAPIClient
+import baltamon.mx.kotlinpokedex.interfaces.buildGson
+import baltamon.mx.kotlinpokedex.interfaces.buildRetrofit
 import baltamon.mx.kotlinpokedex.models.Pokemon
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
+import baltamon.mx.kotlinpokedex.showToast
 import kotlinx.android.synthetic.main.activity_pokemon_detail.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Baltazar Rodriguez on 28/05/2017.
@@ -38,26 +34,18 @@ class PokemonDetailActivity : AppCompatActivity() {
         loadPokemonInformation()
     }
 
-    fun loadPokemonInformation(){
-        val dialog = ProgressDialog.show(this, "Loading", "Loading, please wait...", true)
+    fun loadPokemonInformation() {
 
-        val gson = GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-        val retrofit = Retrofit.Builder().baseUrl("http://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+        val dialog = ProgressDialog.show(this, getString(R.string.loading), "Loading, please wait...", true)
+        val retrofit = buildRetrofit(buildGson())
 
-        val restClient = retrofit.create(RestClient::class.java)
+        val restClient = retrofit.create(PokeAPIClient::class.java)
         val call = restClient.getPokemon(intent.getStringExtra(INTENT_POKEMON_NAME))
 
-        call.enqueue(object: Callback<Pokemon> {
+        call.enqueue(object : Callback<Pokemon> {
             override fun onResponse(call: Call<Pokemon>?, response: Response<Pokemon>) {
-                when (response.code()){
-                    200 -> {
-                        val pokemon: Pokemon = response.body()!!
-                        setUpTabView(pokemon)
-                    }
+                when (response.code()) {
+                    200 -> response.body()?.let { setUpTabView(it) }
                 }
                 dialog.dismiss()
             }
@@ -69,12 +57,8 @@ class PokemonDetailActivity : AppCompatActivity() {
         })
     }
 
-    fun showToast(text: String){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
@@ -95,7 +79,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    fun setUpTabView(pokemon: Pokemon){
+    fun setUpTabView(pokemon: Pokemon) {
         view_pager.adapter = TabPokemonFragmentAdapter(supportFragmentManager, pokemon)
         tab_layout.setupWithViewPager(view_pager)
     }
