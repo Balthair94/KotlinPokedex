@@ -23,9 +23,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    var pokemonList = arrayListOf<NamedAPIResource>() //This should change to an object,
-    var movesList = arrayListOf<NamedAPIResource>() // because all the three arrayList are
-    var typesList = arrayListOf<NamedAPIResource>() // For the same object...
+
+    var generation: Generation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +49,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun loadFragment(fragmentId: Int) {
         val replaceFragment = when (fragmentId) {
-            1 -> PokemonesFragment.newInstance(pokemonList)
-            2 -> PokemonMovesFragment.newInstance(movesList)
-            3 -> PokemonTypesFragment.newInstance(typesList)
+            1 -> PokemonesFragment.newInstance(generation!!.pokemon_species)
+            2 -> PokemonMovesFragment.newInstance(generation!!.moves)
+            3 -> PokemonTypesFragment.newInstance(generation!!.types)
             else -> {
                 showToast("No Fragment Selected")
             }
@@ -75,11 +74,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onResponse(call: Call<Generation>?, response: Response<Generation>) {
                 when (response.code()) {
                     200 -> {
-                        response.body()?.let {
-                            pokemonList = it.pokemon_species
-                            movesList = it.moves
-                            typesList = it.types
-                        }
+                        generation = response.body()
                         loadFragment(1)
                     }
                 }

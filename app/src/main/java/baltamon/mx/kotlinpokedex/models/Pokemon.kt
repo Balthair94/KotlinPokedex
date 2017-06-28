@@ -6,8 +6,13 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 10/06/2017.
  */
-class Pokemon (val id: Int, val name: String, val height: Int, val weight: Int, val sprites: PokemonSprites,
-               val moves: ArrayList<PokemonMove>, val abilities: ArrayList<PokemonAbility>,
+class Pokemon (val id: Int,
+               val name: String,
+               val height: Int,
+               val weight: Int,
+               val sprites: PokemonSprites,
+               val moves: ArrayList<PokemonMove>,
+               val abilities: ArrayList<PokemonAbility>,
                val types: ArrayList<PokemonType>) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Pokemon> = object : Parcelable.Creator<Pokemon> {

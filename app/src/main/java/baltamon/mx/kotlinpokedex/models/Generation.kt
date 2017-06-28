@@ -6,8 +6,11 @@ import android.os.Parcelable
 /**
  * Created by Baltazar Rodriguez on 17/06/2017.
  */
-class Generation (val id: Int, val name: String, val abilities: ArrayList<NamedAPIResource>,
-                  val moves: ArrayList<NamedAPIResource>, val pokemon_species: ArrayList<NamedAPIResource>,
+class Generation (val id: Int,
+                  val name: String,
+                  val abilities: ArrayList<NamedAPIResource>,
+                  val moves: ArrayList<NamedAPIResource>,
+                  val pokemon_species: ArrayList<NamedAPIResource>,
                   val types: ArrayList<NamedAPIResource>) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Generation> = object : Parcelable.Creator<Generation> {
